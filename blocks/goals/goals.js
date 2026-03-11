@@ -1,17 +1,19 @@
-
 export default function decorate(block) {
  
-  const first = block.children[0];
-  if (!first) return;
+  const wrapper = block.children[0];
+  if (!wrapper) return;
  
-  first.classList.add('goals-head');
+  wrapper.classList.add('goals-head');
  
-  const innerDivs = first.children;
+  const firstDiv = wrapper.children[0];
+  const secondDiv = wrapper.children[1];
  
-  if (innerDivs[0]) {
-    innerDivs[0].classList.add('goals-title');
+  if (firstDiv) {
+    firstDiv.classList.add('goals-title');
   }
  
-  if (innerDivs[1]) {
-    innerDivs[1].classList.add('goals-text');
+  if (secondDiv) {
+    secondDiv.classList.add('goals-description');
   }
+ 
+}
