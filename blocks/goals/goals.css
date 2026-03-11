@@ -4,15 +4,19 @@
   align-items:flex-start;
 }
  
+/* image */
 .goals-title img{
   width:100%;
   max-width:420px;
+  display:block;
 }
  
+/* right column */
 .goals-description{
   max-width:520px;
 }
  
+/* goal row */
 .goal-item{
   display:flex;
   align-items:flex-start;
@@ -20,6 +24,7 @@
   margin-top:22px;
 }
  
+/* icon square */
 .goal-icon{
   width:56px;
   height:56px;
@@ -31,10 +36,11 @@
 }
  
 .goal-icon i{
-  color:white;
-  font-size:22px;
+  color:#fff;
+  font-size:20px;
 }
  
+/* text */
 .goal-text h3{
   margin:0 0 6px;
   font-size:18px;
@@ -42,7 +48,19 @@
  
 .goal-text p{
   margin:0;
-  color:#666;
   font-size:14px;
+  color:#666;
   line-height:1.6;
+}
+ 
+/* button */
+.goals-description a{
+  display:inline-block;
+  margin-top:20px;
+  padding:12px 26px;
+  background:#b7aa4a;
+  color:#fff;
+  border-radius:30px;
+  text-decoration:none;
+  font-size:14px;
 }
