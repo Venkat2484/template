@@ -1,5 +1,5 @@
 
-/*.goals {
+.goals {
 .goals-head
     {
         display:flex;
@@ -13,7 +13,7 @@
         }
     }
 
-}*/
+}
 /* Section spacing */
 .goals-container {
   padding: 80px 0;
