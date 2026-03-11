@@ -1,4 +1,4 @@
-
+/*
 .goals {
 .goals-head
     {
@@ -65,7 +65,7 @@
 /* each item spacing */
 .goals-description > div {
   margin-bottom: 18px;
-}
+}*/
 .goals-head {
   display: flex;
   align-items: center;
