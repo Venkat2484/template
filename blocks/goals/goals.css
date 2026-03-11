@@ -1,1 +1,9 @@
 
+.goals {
+.goals-head
+    {
+        display:flex;
+        gap:20%;
+    }
+
+}
