@@ -5,6 +5,12 @@
         display:flex;
         width:1024px;
         gap:2%;
+        .goals-title{
+            width:40%;
+        }
+    .goals-description{
+                width:60%;
+        }
     }
 
 }
