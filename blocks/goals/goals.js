@@ -1,15 +1,17 @@
 
 export default function decorate(block) {
-
-  // Mark first two as you originally needed
-
-  const first = block.children[0];
-
-  if (!first) return;
-
-  first.classList.add('nav-head');
  
-  const second = block.children[1];
-
-  if (second) second.classList.add('nav-head-2');
-}
+  const first = block.children[0];
+  if (!first) return;
+ 
+  first.classList.add('goals-head');
+ 
+  const innerDivs = first.children;
+ 
+  if (innerDivs[0]) {
+    innerDivs[0].classList.add('goals-title');
+  }
+ 
+  if (innerDivs[1]) {
+    innerDivs[1].classList.add('goals-text');
+  }
