@@ -1,5 +1,5 @@
 
-.goals {
+/*.goals {
 .goals-head
     {
         display:flex;
@@ -13,4 +13,56 @@
         }
     }
 
+}*/
+/* Section spacing */
+.goals-container {
+  padding: 80px 0;
+}
+ 
+/* Layout */
+.goals.block {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+ 
+/* Image side */
+.goals-title img,
+.goals.block img {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 6px;
+}
+ 
+/* Content side */
+.goals-description {
+  padding-left: 20px;
+}
+ 
+/* Heading */
+.goals-description h2 {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+ 
+/* Paragraph */
+.goals-description p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+ 
+/* Mission / Goal / Projects spacing */
+.goals-description h3,
+.goals-description h4 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 25px;
+  margin-bottom: 8px;
+}
+ 
+/* each item spacing */
+.goals-description > div {
+  margin-bottom: 18px;
 }
