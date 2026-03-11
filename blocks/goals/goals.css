@@ -1,9 +1,9 @@
 
 .goals {
-    width:1024px;
 .goals-head
     {
         display:flex;
+        width:1024px;
         gap:2%;
     }
 
