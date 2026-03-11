@@ -5,51 +5,46 @@ export default function decorate(block) {
  
   wrapper.classList.add("goals-head");
  
-  const imgDiv = wrapper.children[0];
-  const textDiv = wrapper.children[1];
+  const imgCol = wrapper.children[0];
+  const textCol = wrapper.children[1];
  
-  if (imgDiv) imgDiv.classList.add("goals-title");
+  if (imgCol) imgCol.classList.add("goals-title");
+  if (textCol) textCol.classList.add("goals-description");
  
-  if (textDiv) {
+  const headings = textCol.querySelectorAll("h3");
  
-    textDiv.classList.add("goals-description");
+  const icons = [
+    "fa-paper-plane",
+    "fa-gem",
+    "fa-diagram-project"
+  ];
  
-    const headings = textDiv.querySelectorAll("h3");
+  headings.forEach((heading, index) => {
  
-    const icons = [
-      "fa-paper-plane",
-      "fa-gem",
-      "fa-diagram-project"
-    ];
+    const paragraph = heading.nextElementSibling;
  
-    headings.forEach((heading, index) => {
+    const item = document.createElement("div");
+    item.className = "goal-item";
  
-      const paragraph = heading.nextElementSibling;
+    const iconBox = document.createElement("div");
+    iconBox.className = "goal-icon";
  
-      const item = document.createElement("div");
-      item.className = "goal-item";
+    const icon = document.createElement("i");
+    icon.className = `fa-solid ${icons[index]}`;
  
-      const iconBox = document.createElement("div");
-      iconBox.className = "goal-icon";
+    iconBox.appendChild(icon);
  
-      const icon = document.createElement("i");
-      icon.className = `fa-solid ${icons[index]}`;
+    const text = document.createElement("div");
+    text.className = "goal-text";
  
-      iconBox.appendChild(icon);
+    text.appendChild(heading);
+    if (paragraph) text.appendChild(paragraph);
  
-      const content = document.createElement("div");
-      content.className = "goal-text";
+    item.appendChild(iconBox);
+    item.appendChild(text);
  
-      content.appendChild(heading);
-      if (paragraph) content.appendChild(paragraph);
+    paragraph.after(item);
  
-      item.appendChild(iconBox);
-      item.appendChild(content);
- 
-      textDiv.appendChild(item);
- 
-    });
- 
-  }
+  });
  
 }
