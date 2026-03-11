@@ -1,163 +1,223 @@
-// =========================
-// Variables
-// =========================
-$max-image-width: 450px;
-$gap-lg: 60px;
-$gap-md: 40px;
-$radius: 6px;
 
-$color-primary: #8a7b2d;
-$color-primary-hover: #6f6423;
 
-$heading-xl: 36px;
-$heading-md: 20px;
-$text-md: 16px;
-
-// =========================
-// Mixins
-// =========================
-@mixin button-reset {
-  display: inline-block;
-  text-decoration: none;
-  font-weight: 600;
-  border-radius: 30px;
-  transition: all 0.3s ease;
-}
-
-@mixin flex-center($gap: 0) {
-  display: flex;
-  align-items: center;
-  gap: $gap;
-}
-
-@mixin container-spacing($py: 80px) {
-  padding: $py 0;
-}
-
-// Optional responsive helper
-@mixin respond($breakpoint) {
-  @if $breakpoint == md {
-    @media (max-width: 900px) { @content; }
-  } @else if $breakpoint == sm {
-    @media (max-width: 600px) { @content; }
-  }
-}
-
-// =========================
-// Goals Section
-// =========================
 .goals {
-  &-container {
-    @include container-spacing(80px);
-  }
 
-  // General block layout
-  &.block {
-    @include flex-center($gap-lg);
-  }
+.goals-head
 
-  // Shared image styles (both standalone img and within .goals-title)
-  .goals-title img,
-  &.block img {
-    width: 100%;
-    max-width: $max-image-width;
-    border-radius: $radius;
-  }
+    {
 
-  // Header row
-  &-head {
-    @include flex-center($gap-md);
-    justify-content: space-between;
-    width: 1024px; // from your original
-  }
+        display:flex;
 
-  // Title / image side
-  .goals-title {
-    flex: 1;
+        width:1024px;
 
-    // Specific override for image inside title (keeps display:block + height:auto)
-    img {
-      width: 100%;
-      max-width: $max-image-width;
-      height: auto;
-      display: block;
+        gap:2%;
+
+        .goals-title{
+
+            width:40%;
+
+        }
+
+    .goals-description{
+
+                width:60%;
+
+        }
+
     }
-  }
-
-  // Content side
-  .goals-description {
-    flex: 1;
-    padding-left: 30px; // final chosen value after dedup
-
-    h2 {
-      font-size: $heading-xl;
-      font-weight: 700;
-      margin-bottom: 15px; // final chosen spacing
-    }
-
-    p {
-      font-size: $text-md;
-      line-height: 1.6;
-      margin-bottom: 15px; // final chosen spacing
-    }
-
-    h3,
-    h4 {
-      font-size: $heading-md;
-      font-weight: 600;
-      margin-top: 20px;
-      margin-bottom: 6px;
-    }
-
-    // each item spacing (fixed HTML entity >)
-    > div {
-      margin-bottom: 18px;
-    }
-
-    a {
-      @include button-reset;
-      margin-top: 20px;
-      padding: 12px 28px;
-      background-color: $color-primary;
-      color: #fff;
-
-      &:hover {
-        background-color: $color-primary-hover;
-      }
-    }
-  }
-
-  // Legacy width split (from your very first block). 
-  // Keep only if you want explicit 40/60 split inside .goals-head.
-  &-head {
-    .goals-title { width: 40%; }
-    .goals-description { width: 60%; padding-left: 20px; } // narrower padding when using fixed widths
-  }
-
-  // Responsive tweaks (optional)
-  @include respond(md) {
-    &.block,
-    &-head {
-      flex-direction: column;
-      width: 100%;
-      gap: 24px;
-    }
-
-    .goals-title,
-    .goals-description {
-      width: 100% !important; // override the 40/60 split on smaller screens
-      padding-left: 0;
-    }
-
-    .goals-description h2 {
-      font-size: 28px;
-    }
-  }
-
-  @include respond(sm) {
-    .goals-description a {
-      width: 100%;
-      text-align: center;
-    }
-  }
+ 
 }
+
+/* Section spacing */
+
+.goals-container {
+
+  padding: 80px 0;
+
+}
+
+/* Layout */
+
+.goals.block {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 60px;
+
+}
+
+/* Image side */
+
+.goals-title img,
+
+.goals.block img {
+
+  width: 100%;
+
+  max-width: 450px;
+
+  border-radius: 6px;
+
+}
+
+/* Content side */
+
+.goals-description {
+
+  padding-left: 20px;
+
+}
+
+/* Heading */
+
+.goals-description h2 {
+
+  font-size: 36px;
+
+  font-weight: 700;
+
+  margin-bottom: 20px;
+
+}
+
+/* Paragraph */
+
+.goals-description p {
+
+  font-size: 16px;
+
+  line-height: 1.6;
+
+  margin-bottom: 20px;
+
+}
+
+/* Mission / Goal / Projects spacing */
+
+.goals-description h3,
+
+.goals-description h4 {
+
+  font-size: 20px;
+
+  font-weight: 600;
+
+  margin-top: 25px;
+
+  margin-bottom: 8px;
+
+}
+
+/* each item spacing */
+
+.goals-description > div {
+
+  margin-bottom: 18px;
+
+}
+
+.goals-head {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 40px;
+
+}
+
+/* image side */
+
+.goals-title {
+
+  flex: 1;
+
+}
+
+.goals-title img {
+
+  width: 100%;
+
+  max-width: 450px;
+
+  height: auto;
+
+  display: block;
+
+}
+
+/* content side */
+
+.goals-description {
+
+  flex: 1;
+
+  padding-left: 30px;
+
+}
+
+/* heading spacing */
+
+.goals-description h2 {
+
+  margin-bottom: 15px;
+
+}
+
+/* paragraph spacing */
+
+.goals-description p {
+
+  margin-bottom: 15px;
+
+  line-height: 1.6;
+
+}
+
+/* mission goal project spacing */
+
+.goals-description h3,
+
+.goals-description h4 {
+
+  margin-top: 20px;
+
+  margin-bottom: 6px;
+
+}
+ 
+.goals-description a {
+
+  display: inline-block;
+
+  margin-top: 20px;
+
+  padding: 12px 28px;
+
+  background-color: #8a7b2d;
+
+  color: #fff;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  border-radius: 30px;
+
+  transition: all 0.3s ease;
+
+}
+
+/* hover effect */
+
+.goals-description a:hover {
+
+  background-color: #6f6423;
+
+}
+
+ 
