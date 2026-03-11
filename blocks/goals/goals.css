@@ -34,7 +34,7 @@
 
 .goals-title img,
 .goals.block img {
-  width: 100%;
+  width: 100%;height: revert-layer;
   max-width: 450px;
   border-radius: 6px;
 }
