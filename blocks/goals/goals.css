@@ -1,131 +1,121 @@
-/* Section spacing */
+// ── Goals Block ───────────────────────────────────────────────────────────────
+ 
+$gold: #8a7b2d;
+$gold-dark: #6f6423;
+$text-primary: #1a1a1a;
+$text-secondary: #555;
+$text-muted: #666;
+ 
 .goals-container {
   padding: 80px 0;
 }
-
-/* Main layout for the block */
-.goals.block {
-  display: flex;
-  align-items: center;
-  gap: 60px;
-}
-
-/* Head: split image and content */
+ 
+// Two-column flex wrapper
 .goals-head {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 40px;
+  align-items: flex-start;
+  gap: 60px;
+  max-width: 1100px;
+  margin: 0 auto;
 }
-
+ 
+// ── Image column ─────────────────────────────────────────────────────────────
+ 
 .goals-title {
-  flex: 1;
+  flex: 0 0 380px;
+ 
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 4px;
+  }
 }
-
-.goals-title img,
-.goals.block img {
-  width: 100%;
-  max-width: 450px;
-  height: auto;
-  display: block;
-  border-radius: 6px;
-}
-
+ 
+// ── Content column ────────────────────────────────────────────────────────────
+ 
 .goals-description {
   flex: 1;
-  padding-left: 30px;
+  padding-top: 8px;
+ 
+  h2 {
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 0 0 16px;
+    color: $text-primary;
+  }
+ 
+  // Direct paragraph (intro text — not inside a feature)
+  > p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: $text-secondary;
+    margin: 0 0 28px;
+  }
+ 
+  // CTA button / link
+  > a {
+    display: inline-block;
+    margin-top: 24px;
+    padding: 13px 32px;
+    background-color: $gold;
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 30px;
+    transition: background-color 0.3s ease;
+ 
+    &:hover {
+      background-color: $gold-dark;
+    }
+  }
 }
-
-/* Heading */
-.goals-description h2 {
-  font-size: 36px;
-  font-weight: 700;
-  margin-bottom: 15px;
-}
-
-/* Paragraph */
-.goals-description p {
-  font-size: 16px;
-  line-height: 1.6;
-  margin-bottom: 15px;
-}
-
-/* Item headings */
-.goals-description h3,
-.goals-description h4 {
-  font-size: 20px;
-  font-weight: 600;
-  margin-top: 20px;
-  margin-bottom: 6px;
-}
-
-/* Each item spacing */
-.goals-description > div {
-  margin-bottom: 18px;
-}
-
-/* --- Icon + content row --- */
-.goals-item-row {
+ 
+// ── Feature item row ─────────────────────────────────────────────────────────
+ 
+.goals-feature {
   display: flex;
   align-items: flex-start;
-  gap: 14px;
-  background: #eef1e2;               /* subtle background like the template tile */
-  border-radius: 6px;
-  padding: 16px 18px;
+  gap: 18px;
+  margin-bottom: 22px;
 }
-
-/* Icon box (green rounded square) */
-.goals-icon {
-  min-width: 48px;
-  min-height: 48px;
-  width: 48px;
-  height: 48px;
-  background: #8a7b2d;
-  border-radius: 8px;
-  display: inline-flex;
+ 
+// Olive-gold icon box
+.goals-feature-icon {
+  flex-shrink: 0;
+  width: 58px;
+  height: 58px;
+  background-color: $gold;
+  border-radius: 4px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 48px;
-}
-
-/* Ensure the white SVG renders crisp */
-.goals-icon svg {
-  display: block;
-}
-
-/* Content next to icon */
-.goals-item-content {
-  flex: 1;
-}
-
-/* CTA button */
-.goals-description a {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 12px 28px;
-  background-color: #8a7b2d;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 600;
-  border-radius: 30px;
-  transition: all 0.3s ease;
-}
-
-.goals-description a:hover {
-  background-color: #6f6423;
-}
-
-/* Responsive tweak */
-@media (max-width: 900px) {
-  .goals-head {
-    flex-direction: column;
-    gap: 24px;
-  }
-  .goals-title img {
-    max-width: 100%;
-  }
-  .goals-description {
-    padding-left: 0;
+ 
+  img {
+    width: 28px;
+    height: 28px;
+    filter: brightness(0) invert(1);
   }
 }
-``
+ 
+// Feature title and description
+.goals-feature-text {
+  h3,
+  h4 {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 0 0 5px;
+    color: $text-primary;
+  }
+ 
+  p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: $text-muted;
+    margin: 0;
+  }
+}
+ 
