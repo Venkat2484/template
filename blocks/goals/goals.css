@@ -66,3 +66,45 @@
 .goals-description > div {
   margin-bottom: 18px;
 }
+.goals-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+ 
+/* image side */
+.goals-title {
+  flex: 1;
+}
+ 
+.goals-title img {
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  display: block;
+}
+ 
+/* content side */
+.goals-description {
+  flex: 1;
+  padding-left: 30px;
+}
+ 
+/* heading spacing */
+.goals-description h2 {
+  margin-bottom: 15px;
+}
+ 
+/* paragraph spacing */
+.goals-description p {
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+ 
+/* mission goal project spacing */
+.goals-description h3,
+.goals-description h4 {
+  margin-top: 20px;
+  margin-bottom: 6px;
+}
