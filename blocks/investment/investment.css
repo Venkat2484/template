@@ -1,39 +1,3 @@
-/* main layout */
-.investment.block{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:40px;
-  align-items:start;
-}
- 
-/* left image */
-.nav-head{
-  grid-row: span 3;
-}
- 
-/* title */
-.investment-title{
-  grid-column:2;
-}
- 
-/* service rows */
-.investment-item > div{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:40px;
-}
- 
-/* headings */
-.investment-item h3{
-  font-size:18px;
-  margin-bottom:6px;
-}
- 
-/* text */
-.investment-item p{
-  font-size:14px;
-  color:#666;
-}
 .investment.block{
   display:grid;
   grid-template-columns: 1fr 1fr;
@@ -45,15 +9,25 @@
   grid-column:1;
 }
  
-/* right content */
-.right-wrapper{
+/* right side */
+.investment-right{
   grid-column:2;
 }
  
-/* two column items */
-.items-row{
+/* 2x2 grid */
+.investment-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:30px;
-  margin-top:20px;
+}
+ 
+/* item style */
+.investment-grid h3{
+  font-size:18px;
+  margin-bottom:6px;
+}
+ 
+.investment-grid p{
+  font-size:14px;
+  color:#666;
 }
