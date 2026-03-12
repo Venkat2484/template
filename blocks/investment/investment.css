@@ -24,6 +24,9 @@
   flex-direction: column;
   justify-content: center;
 }
+.investment-block__heading {
+  margin-bottom: 10px;
+}
 .investment-block__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
