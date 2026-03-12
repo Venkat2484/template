@@ -1,12 +1,45 @@
-
 .investment.block{
-  display: flex;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:25px;
 }
  
-.left-box{
-  width: 50%;
+/* heading section full width */
+.goals-head{
+grid-column:span 2;
 }
  
-.right-box{
-  width: 50%;
+/* 4 boxes layout */
+.box1,
+.box2,
+.box3,
+.box4{
+display:flex;
+gap:15px;
+align-items:flex-start;
+}
+ 
+/* icon style */
+.box1 img,
+.box2 img,
+.box3 img,
+.box4 img{
+width:40px;
+}
+ 
+/* text style */
+.box1 h4,
+.box2 h4,
+.box3 h4,
+.box4 h4{
+font-size:18px;
+margin-bottom:5px;
+}
+ 
+.box1 p,
+.box2 p,
+.box3 p,
+.box4 p{
+font-size:14px;
+color:#777;
 }
