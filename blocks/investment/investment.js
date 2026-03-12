@@ -1,25 +1,13 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function(){
  
-let items = document.querySelectorAll(".investment.block > div");
+const wrapper = document.querySelector(".investment.block");
  
-items.forEach((el,index)=>{
+const divs = wrapper.querySelectorAll(":scope > div");
  
-if(index === 1){
-el.classList.add("box1");
-}
- 
-if(index === 2){
-el.classList.add("box2");
-}
- 
-if(index === 3){
-el.classList.add("box3");
-}
- 
-if(index === 4){
-el.classList.add("box4");
-}
- 
-});
+divs[0].classList.add("investment-header");
+divs[1].classList.add("investment-item-1");
+divs[2].classList.add("investment-item-2");
+divs[3].classList.add("investment-item-3");
+divs[4].classList.add("investment-item-4");
  
 });
