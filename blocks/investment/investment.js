@@ -1,11 +1,13 @@
-document.addEventListener("DOMContentLoaded", function () {
+export default function decorate(block) {
  
-  const divs = document.querySelectorAll(".investment.block > div");
+  const container = block.children[0];
+  if (!container) return;
  
-  divs[0].classList.add("investment-head");
-  divs[1].classList.add("investment-item1");
-  divs[2].classList.add("investment-item2");
-  divs[3].classList.add("investment-item3");
-  divs[4].classList.add("investment-item4");
+  /* main class */
+  container.classList.add("nav-head");
  
-});
+  /* create track */
+  const track = document.createElement("div");
+  track.className = "nav-head-2";
+ 
+}
