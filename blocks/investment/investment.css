@@ -31,3 +31,39 @@
   font-size:14px;
   color:#666;
 }
+.investment.block{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:40px;
+}
+ 
+/* image left */
+.nav-head{
+  grid-column:1;
+  grid-row:1 / span 2;
+}
+ 
+/* title */
+.investment-item1{
+  grid-column:2;
+}
+ 
+/* services container */
+.investment-item2 > div,
+.investment-item3 > div{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+}
+ 
+/* headings */
+.investment.block h3{
+  font-size:18px;
+  margin-bottom:6px;
+}
+ 
+/* text */
+.investment.block p{
+  font-size:14px;
+  color:#666;
+}
