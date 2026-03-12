@@ -34,3 +34,26 @@
   font-size:14px;
   color:#666;
 }
+.investment.block{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:40px;
+}
+ 
+/* left image */
+.nav-head{
+  grid-column:1;
+}
+ 
+/* right content */
+.right-wrapper{
+  grid-column:2;
+}
+ 
+/* two column items */
+.items-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px;
+  margin-top:20px;
+}
