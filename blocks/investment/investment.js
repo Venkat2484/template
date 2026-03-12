@@ -1,15 +1,23 @@
 export default function decorate(block) {
  
-  const rows = [...block.children];
+  const navHead = block.querySelector(".nav-head");
+  const item1 = block.querySelector(".investment-item1");
+  const item2 = block.querySelector(".investment-item2");
+  const item3 = block.querySelector(".investment-item3");
  
-  /* image */
-  if (rows[0]) rows[0].classList.add("nav-head");
+  /* create right side wrapper */
+  const rightWrapper = document.createElement("div");
+  rightWrapper.className = "right-wrapper";
  
-  /* title section */
-  if (rows[1]) rows[1].classList.add("investment-title");
+  /* create row for item2 & item3 */
+  const itemsRow = document.createElement("div");
+  itemsRow.className = "items-row";
  
-  /* item groups */
-  if (rows[2]) rows[2].classList.add("investment-item");
-  if (rows[3]) rows[3].classList.add("investment-item");
+  /* move items */
+  itemsRow.append(item2, item3);
+  rightWrapper.append(item1, itemsRow);
+ 
+  /* append wrapper */
+  block.append(rightWrapper);
  
 }
