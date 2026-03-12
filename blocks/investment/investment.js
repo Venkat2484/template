@@ -1,139 +1,99 @@
-<script>
 (function () {
-  // Icon class map; will fall back to "fa-star" if we run out
-  var ICONS = [
+ 
+  var icons = [
     "fa-briefcase",
     "fa-chart-line",
     "fa-file-alt",
     "fa-piggy-bank"
   ];
-
-  function loadFontAwesomeOnce() {
-    // Avoid duplicate loads
+ 
+  function loadFontAwesome() {
     if (
       document.querySelector('link[href*="font-awesome"]') ||
       document.querySelector('link[href*="fontawesome"]')
-    ) {
-      return;
-    }
-
-    // Add minimal fallback so <i> doesn't take space if FA is slow/missing
-    var fallbackStyle = document.createElement("style");
-    fallbackStyle.textContent = '.investment-block__icon i{display:inline-block}';
-    document.head.appendChild(fallbackStyle);
-
+    ) return;
+ 
     var link = document.createElement("link");
     link.rel = "stylesheet";
     link.href =
       "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css";
-    link.onload = function () {
-      // Remove fallback once FA is ready (optional)
-      if (fallbackStyle && fallbackStyle.parentNode) {
-        fallbackStyle.parentNode.removeChild(fallbackStyle);
-      }
-    };
     document.head.appendChild(link);
   }
-
-  function qsaScope(el) {
-    // Prefer :scope for correctness; fall back if unsupported
-    try {
-      return function (sel) { return Array.from(el.querySelectorAll(":scope " + sel)); };
-    } catch (e) {
-      return function (sel) { return Array.from(el.querySelectorAll(sel)); };
-    }
-  }
-
+ 
   function initInvestmentBlock() {
+ 
+    loadFontAwesome();
+ 
     var block = document.querySelector(".investment.block");
     if (!block) return;
-    if (block.classList.contains("investment-block--initialized")) return;
-
-    loadFontAwesomeOnce();
-
+ 
     var children = Array.from(block.children);
-    if (children.length < 2) return;
-
+    if (children.length < 3) return;
+ 
     block.classList.add("investment-block--initialized");
-    block.setAttribute("role", "region");
-    block.setAttribute("aria-label", "Investment features");
-
-    // Take the first child as the image container (normalize class)
+ 
     var imageDiv = children[0];
+    var titleDiv = children[1];
+ 
     imageDiv.classList.add("investment-block__image");
-
-    // Collect item nodes from all subsequent children
+    titleDiv.classList.add("investment-block__title");
+ 
+    var contentWrapper = document.createElement("div");
+    contentWrapper.className = "investment-block__content";
+ 
+    var gridWrapper = document.createElement("div");
+    gridWrapper.className = "investment-block__grid";
+ 
     var allItems = [];
-    for (var i = 1; i < children.length; i++) {
+ 
+    for (var i = 2; i < children.length; i++) {
+ 
       var child = children[i];
-      var scopedQSA = qsaScope(child);
-      var subDivs = scopedQSA("> div");
+      var subDivs = Array.from(child.querySelectorAll(":scope > div"));
+ 
       if (subDivs.length > 1) {
-        for (var j = 0; j < subDivs.length; j++) {
-          allItems.push(subDivs[j]);
-        }
+        subDivs.forEach(function (el) {
+          allItems.push(el);
+        });
       } else {
         allItems.push(child);
       }
+ 
     }
-
-    // Prepare new structure off-DOM
-    var frag = document.createDocumentFragment();
-
-    var contentWrapper = document.createElement("div");
-    contentWrapper.classList.add("investment-block__content");
-
-    var gridWrapper = document.createElement("div");
-    gridWrapper.classList.add("investment-block__grid");
-
-    // Normalize each item
-    for (var k = 0; k < allItems.length; k++) {
-      var item = allItems[k];
-
-      // Skip if it's already moved
-      if (!item || !item.parentNode) continue;
-
+ 
+    allItems.forEach(function (item, index) {
+ 
       item.classList.add("investment-block__item");
-
-      // Build icon box
-      var iconClass = ICONS[k] !== undefined ? ICONS[k] : "fa-star";
+ 
+      var iconClass = icons[index] || "fa-star";
+ 
       var iconBox = document.createElement("div");
-      iconBox.classList.add("investment-block__icon");
-
+      iconBox.className = "investment-block__icon";
+ 
       var iconEl = document.createElement("i");
-      iconEl.classList.add("fas", iconClass);
-      iconEl.setAttribute("aria-hidden", "true");
-
+      iconEl.className = "fas " + iconClass;
+ 
       iconBox.appendChild(iconEl);
-
-      // Insert icon as first child
+ 
       item.insertBefore(iconBox, item.firstChild);
-
-      // Move item into grid
+ 
       gridWrapper.appendChild(item);
-    }
-
+ 
+    });
+ 
+    contentWrapper.appendChild(titleDiv);
     contentWrapper.appendChild(gridWrapper);
-
-    // Clear original block and append new order:
-    // image left (desktop), content right; stacks on mobile by CSS
-    // We re-append the same imageDiv to place it first.
-    while (block.firstChild) block.removeChild(block.firstChild);
-
-    frag.appendChild(imageDiv);
-    frag.appendChild(contentWrapper);
-
-    block.appendChild(frag);
-
-    // Optional: remove empty wrappers that may remain (defensive)
-    // (At this point we've rebuilt the block, so nothing extra remains.)
+ 
+    block.innerHTML = "";
+    block.appendChild(imageDiv);
+    block.appendChild(contentWrapper);
+ 
   }
-
-  // Run once DOM is ready
+ 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initInvestmentBlock, { once: true });
+    document.addEventListener("DOMContentLoaded", initInvestmentBlock);
   } else {
     initInvestmentBlock();
   }
+ 
 })();
-</script>
