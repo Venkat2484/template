@@ -11,73 +11,84 @@
     if (
       document.querySelector('link[href*="font-awesome"]') ||
       document.querySelector('link[href*="fontawesome"]')
-    ) {
-      return;
-    }
+    ) return;
+ 
     var link = document.createElement("link");
     link.rel = "stylesheet";
     link.href =
       "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css";
+ 
     document.head.appendChild(link);
   }
  
   function initInvestmentBlock() {
+ 
     loadFontAwesome();
  
     var block = document.querySelector(".investment.block");
     if (!block) return;
  
     var children = Array.from(block.children);
-    if (children.length < 2) return;
+    if (children.length < 3) return;
  
     block.classList.add("investment-block--initialized");
  
     var imageDiv = children[0];
+    var titleDiv = children[1];
+ 
     imageDiv.classList.add("investment-block__image");
+    titleDiv.classList.add("investment-block__title");
  
     var contentWrapper = document.createElement("div");
-    contentWrapper.classList.add("investment-block__content");
+    contentWrapper.className = "investment-block__content";
  
     var gridWrapper = document.createElement("div");
-    gridWrapper.classList.add("investment-block__grid");
+    gridWrapper.className = "investment-block__grid";
  
     var allItems = [];
  
-    for (var i = 1; i < children.length; i++) {
+    for (var i = 2; i < children.length; i++) {
+ 
       var child = children[i];
       var cells = Array.from(child.querySelectorAll(":scope > div"));
  
       if (cells.length > 0) {
-        for (var j = 0; j < cells.length; j++) {
-          allItems.push(cells[j]);
-        }
+        cells.forEach(function (cell) {
+          allItems.push(cell);
+        });
       } else {
         allItems.push(child);
       }
+ 
     }
  
-    for (var k = 0; k < allItems.length; k++) {
-      var item = allItems[k];
+    allItems.forEach(function (item, index) {
+ 
       item.classList.add("investment-block__item");
  
-      var iconClass = icons[k] !== undefined ? icons[k] : "fa-star";
+      var iconClass = icons[index] || "fa-star";
  
       var iconBox = document.createElement("div");
-      iconBox.classList.add("investment-block__icon");
+      iconBox.className = "investment-block__icon";
  
       var iconEl = document.createElement("i");
-      iconEl.classList.add("fas", iconClass);
+      iconEl.className = "fas " + iconClass;
  
       iconBox.appendChild(iconEl);
+ 
       item.insertBefore(iconBox, item.firstChild);
  
       gridWrapper.appendChild(item);
-    }
  
+    });
+ 
+    contentWrapper.appendChild(titleDiv);
     contentWrapper.appendChild(gridWrapper);
  
+    block.innerHTML = "";
     block.appendChild(imageDiv);
     block.appendChild(contentWrapper);
+ 
   }
  
   if (document.readyState === "loading") {
@@ -87,3 +98,4 @@
   }
  
 })();
+ 
