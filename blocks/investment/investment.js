@@ -11,8 +11,9 @@
     if (
       document.querySelector('link[href*="font-awesome"]') ||
       document.querySelector('link[href*="fontawesome"]')
-    ) return;
- 
+    ) {
+      return;
+    }
     var link = document.createElement("link");
     link.rel = "stylesheet";
     link.href =
@@ -21,73 +22,62 @@
   }
  
   function initInvestmentBlock() {
- 
     loadFontAwesome();
  
     var block = document.querySelector(".investment.block");
     if (!block) return;
  
     var children = Array.from(block.children);
-    if (children.length < 3) return;
+    if (children.length < 2) return;
  
     block.classList.add("investment-block--initialized");
  
     var imageDiv = children[0];
-    var titleDiv = children[1];
- 
     imageDiv.classList.add("investment-block__image");
-    titleDiv.classList.add("investment-block__title");
  
     var contentWrapper = document.createElement("div");
-    contentWrapper.className = "investment-block__content";
+    contentWrapper.classList.add("investment-block__content");
  
     var gridWrapper = document.createElement("div");
-    gridWrapper.className = "investment-block__grid";
+    gridWrapper.classList.add("investment-block__grid");
  
     var allItems = [];
  
-    for (var i = 2; i < children.length; i++) {
- 
+    for (var i = 1; i < children.length; i++) {
       var child = children[i];
-      var subDivs = Array.from(child.querySelectorAll(":scope > div"));
+      var cells = Array.from(child.querySelectorAll(":scope > div"));
  
-      if (subDivs.length > 1) {
-        subDivs.forEach(function (el) {
-          allItems.push(el);
-        });
+      if (cells.length > 0) {
+        for (var j = 0; j < cells.length; j++) {
+          allItems.push(cells[j]);
+        }
       } else {
         allItems.push(child);
       }
- 
     }
  
-    allItems.forEach(function (item, index) {
- 
+    for (var k = 0; k < allItems.length; k++) {
+      var item = allItems[k];
       item.classList.add("investment-block__item");
  
-      var iconClass = icons[index] || "fa-star";
+      var iconClass = icons[k] !== undefined ? icons[k] : "fa-star";
  
       var iconBox = document.createElement("div");
-      iconBox.className = "investment-block__icon";
+      iconBox.classList.add("investment-block__icon");
  
       var iconEl = document.createElement("i");
-      iconEl.className = "fas " + iconClass;
+      iconEl.classList.add("fas", iconClass);
  
       iconBox.appendChild(iconEl);
- 
       item.insertBefore(iconBox, item.firstChild);
  
       gridWrapper.appendChild(item);
+    }
  
-    });
- 
-    contentWrapper.appendChild(titleDiv);
     contentWrapper.appendChild(gridWrapper);
  
-    block.innerHTML = "";
     block.appendChild(imageDiv);
     block.appendChild(contentWrapper);
- 
   }
  
   if (document.readyState === "loading") {
