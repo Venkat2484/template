@@ -1,23 +1,23 @@
 export default function decorate(block) {
  
-  const navHead = block.querySelector(".nav-head");
-  const item1 = block.querySelector(".investment-item1");
-  const item2 = block.querySelector(".investment-item2");
-  const item3 = block.querySelector(".investment-item3");
+  const navHead = block.querySelector('.nav-head');
+  const item1 = block.querySelector('.investment-item1');
+  const item2 = block.querySelector('.investment-item2');
+  const item3 = block.querySelector('.investment-item3');
  
   /* create right side wrapper */
-  const rightWrapper = document.createElement("div");
-  rightWrapper.className = "right-wrapper";
+  const right = document.createElement('div');
+  right.className = 'investment-right';
  
-  /* create row for item2 & item3 */
-  const itemsRow = document.createElement("div");
-  itemsRow.className = "items-row";
+  /* create grid wrapper */
+  const grid = document.createElement('div');
+  grid.className = 'investment-grid';
  
   /* move items */
-  itemsRow.append(item2, item3);
-  rightWrapper.append(item1, itemsRow);
+  grid.append(item1, item2, item3);
+  right.append(grid);
  
-  /* append wrapper */
-  block.append(rightWrapper);
+  /* add to block */
+  block.append(right);
  
 }
