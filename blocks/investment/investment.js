@@ -27,42 +27,49 @@
     var block = document.querySelector(".investment.block");
     if (!block) return;
  
-    var children = Array.from(block.children);
-    if (children.length < 2) return;
+    var rows = Array.from(block.children);
+    if (rows.length < 2) return;
  
     block.classList.add("investment-block--initialized");
  
-    var imageDiv = children[0];
+    var imageDiv = null;
+    var headingDiv = null;
+    var allItems = [];
+ 
+    var row0Cells = Array.from(rows[0].querySelectorAll(":scope > div"));
+ 
+    if (row0Cells.length >= 2) {
+      imageDiv = row0Cells[0];
+      headingDiv = row0Cells[1];
+    } else if (row0Cells.length === 1) {
+      imageDiv = row0Cells[0];
+    } else {
+      imageDiv = rows[0];
+    }
+ 
     imageDiv.classList.add("investment-block__image");
+ 
+    for (var i = 1; i < rows.length; i++) {
+      var cells = Array.from(rows[i].querySelectorAll(":scope > div"));
+      if (cells.length > 0) {
+        for (var j = 0; j < cells.length; j++) {
+          allItems.push(cells[j]);
+        }
+      } else {
+        allItems.push(rows[i]);
+      }
+    }
  
     var contentWrapper = document.createElement("div");
     contentWrapper.classList.add("investment-block__content");
  
+    if (headingDiv) {
+      headingDiv.classList.add("investment-block__heading");
+      contentWrapper.appendChild(headingDiv);
+    }
+ 
     var gridWrapper = document.createElement("div");
     gridWrapper.classList.add("investment-block__grid");
- 
-    var allItems = [];
- 
-    var grandchildren = Array.from(
-      block.querySelectorAll(":scope > div:not(:first-child) > div")
-    );
- 
-    if (grandchildren.length >= 4) {
-      allItems = grandchildren;
-    } else if (grandchildren.length > 0) {
-      allItems = grandchildren;
-      for (var i = 1; i < children.length; i++) {
-        var child = children[i];
-        var hasCells = child.querySelector(":scope > div");
-        if (!hasCells) {
-          allItems.push(child);
-        }
-      }
-    } else {
-      for (var i = 1; i < children.length; i++) {
-        allItems.push(children[i]);
-      }
-    }
  
     for (var k = 0; k < allItems.length; k++) {
       var item = allItems[k];
@@ -83,6 +90,10 @@
     }
  
     contentWrapper.appendChild(gridWrapper);
+ 
+    while (block.firstChild) {
+      block.removeChild(block.firstChild);
+    }
  
     block.appendChild(imageDiv);
     block.appendChild(contentWrapper);
