@@ -1,20 +1,11 @@
 export default function decorate(block) {
  
-  const container = block.children[0];
-  if (!container) return;
+  const rows = [...block.children];
  
-  /* main class */
-  container.classList.add("nav-head");
- 
-  /* child elements */
-  const child1 = block.children[1];
-  const child2 = block.children[2];
-  const child3 = block.children[3];
-  const child4 = block.children[4];
- 
-  if (child1) child1.classList.add("investment-item1");
-  if (child2) child2.classList.add("investment-item2");
-  if (child3) child3.classList.add("investment-item3");
-  if (child4) child4.classList.add("investment-item4");
+  if (rows[0]) rows[0].classList.add("nav-head");
+  if (rows[1]) rows[1].classList.add("investment-item1");
+  if (rows[2]) rows[2].classList.add("investment-item2");
+  if (rows[3]) rows[3].classList.add("investment-item3");
+  if (rows[4]) rows[4].classList.add("investment-item4");
  
 }
