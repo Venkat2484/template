@@ -1,9 +1,12 @@
 export default function decorate(block) {
  
-  const navHead = block.querySelector('.nav-head');
-  const item1 = block.querySelector('.investment-item1');
-  const item2 = block.querySelector('.investment-item2');
-  const item3 = block.querySelector('.investment-item3');
+  const rows = [...block.children];
  
+  if (rows[0]) rows[0].classList.add("nav-head");
+  if (rows[1]) rows[1].classList.add("investment-item1");
+  if (rows[2]) rows[2].classList.add("investment-item2");
+  if (rows[3]) rows[3].classList.add("investment-item3");
+  if (rows[4]) rows[4].classList.add("investment-item4");
  
 }
+ 
