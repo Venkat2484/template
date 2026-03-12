@@ -1,9 +1,25 @@
-const divs = document.querySelectorAll('.investment.block > div');
+document.addEventListener("DOMContentLoaded", function () {
  
-divs.forEach((el,index)=>{
-   if(index === 0){
-      el.classList.add('left-box');
-   }else{
-      el.classList.add('right-box');
-   }
+let items = document.querySelectorAll(".investment.block > div");
+ 
+items.forEach((el,index)=>{
+ 
+if(index === 1){
+el.classList.add("box1");
+}
+ 
+if(index === 2){
+el.classList.add("box2");
+}
+ 
+if(index === 3){
+el.classList.add("box3");
+}
+ 
+if(index === 4){
+el.classList.add("box4");
+}
+ 
+});
+ 
 });
