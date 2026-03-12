@@ -1,6 +1,6 @@
 export default function decorate(block) {
  
-  const container = block.children[0];
+  const container = block.children[1];
   if (!container) return;
  
   /* main class */
