@@ -76,11 +76,11 @@
  
       iconBox.appendChild(iconEl);
  
-      /* find first H3 inside item */
-      var heading = item.querySelector("h3");
+      /* find first h3 */
+      var h3 = item.querySelector("h3");
  
-      if (heading) {
-        heading.parentNode.insertBefore(iconBox, heading);
+      if (h3) {
+        h3.parentNode.insertBefore(iconBox, h3);
       } else {
         item.insertBefore(iconBox, item.firstChild);
       }
