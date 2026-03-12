@@ -3,7 +3,7 @@ export default function decorate(block) {
   const wrapper = block.children[0];
   if (!wrapper) return;
 
-  wrapper.classList.add('goals-head');
+  wrapper.classList.add('investment-head');
 
   // Expecting 4 divs inside wrapper
   const div1 = wrapper.children[0];
