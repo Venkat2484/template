@@ -8,104 +8,94 @@
   ];
  
   function loadFontAwesome() {
-    if (document.querySelector('link[href*="fontawesome"], link[href*="font-awesome"]')) {
-      return;
-    }
+    if (
+      document.querySelector('link[href*="font-awesome"]') ||
+      document.querySelector('link[href*="fontawesome"]')
+    ) return;
+ 
     var link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css";
+    link.href =
+      "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css";
+ 
     document.head.appendChild(link);
   }
  
   function initInvestmentBlock() {
+ 
     loadFontAwesome();
  
     var block = document.querySelector(".investment.block");
     if (!block) return;
  
-    var rows = Array.from(block.children);
-    if (rows.length < 1) return;
+    var children = Array.from(block.children);
+    if (children.length < 3) return;
  
     block.classList.add("investment-block--initialized");
  
-    // Row 0: always image + heading
-    var row0 = rows[0];
-    var row0Cells = Array.from(row0.querySelectorAll(":scope > div"));
+    var imageDiv = children[0];
+    var headingDiv = children[1];
  
-    var imageDiv = null;
-    var headingDiv = null;
- 
-    if (row0Cells.length >= 2) {
-      for (var c = 0; c < row0Cells.length; c++) {
-        if (!imageDiv && row0Cells[c].querySelector("img, picture")) {
-          imageDiv = row0Cells[c];
-        } else if (!headingDiv) {
-          headingDiv = row0Cells[c];
-        }
-      }
-    } else if (row0Cells.length === 1) {
-      if (row0Cells[0].querySelector("img, picture")) {
-        imageDiv = row0Cells[0];
-      } else {
-        imageDiv = row0;
-      }
-    } else {
-      imageDiv = row0;
-    }
- 
-    if (!imageDiv) imageDiv = row0;
     imageDiv.classList.add("investment-block__image");
+    headingDiv.classList.add("investment-block__heading");
  
-    // Rows 1+: ALL cells are feature items — no exceptions
-    var allItems = [];
-    for (var i = 1; i < rows.length; i++) {
-      var row = rows[i];
-      var cells = Array.from(row.querySelectorAll(":scope > div"));
-      if (cells.length > 0) {
-        for (var j = 0; j < cells.length; j++) {
-          allItems.push(cells[j]);
-        }
-      } else {
-        allItems.push(row);
-      }
-    }
- 
-    // Build layout
     var contentWrapper = document.createElement("div");
-    contentWrapper.classList.add("investment-block__content");
- 
-    if (headingDiv) {
-      headingDiv.classList.add("investment-block__heading");
-      contentWrapper.appendChild(headingDiv);
-    }
+    contentWrapper.className = "investment-block__content";
  
     var gridWrapper = document.createElement("div");
-    gridWrapper.classList.add("investment-block__grid");
+    gridWrapper.className = "investment-block__grid";
  
-    for (var k = 0; k < allItems.length; k++) {
-      var item = allItems[k];
+    var items = [];
+ 
+    for (var i = 2; i < children.length; i++) {
+ 
+      var child = children[i];
+      var cells = Array.from(child.querySelectorAll(":scope > div"));
+ 
+      if (cells.length) {
+        cells.forEach(function (cell) {
+          items.push(cell);
+        });
+      } else {
+        items.push(child);
+      }
+ 
+    }
+ 
+    items.forEach(function (item, index) {
+ 
       item.classList.add("investment-block__item");
  
+      var iconClass = icons[index] || "fa-star";
+ 
       var iconBox = document.createElement("div");
-      iconBox.classList.add("investment-block__icon");
+      iconBox.className = "investment-block__icon";
  
       var iconEl = document.createElement("i");
-      iconEl.classList.add("fas", icons[k % icons.length]);
+      iconEl.className = "fas " + iconClass;
+ 
       iconBox.appendChild(iconEl);
  
-      item.insertBefore(iconBox, item.firstChild);
-      gridWrapper.appendChild(item);
-    }
+      /* find first H3 inside item */
+      var heading = item.querySelector("h3");
  
+      if (heading) {
+        heading.parentNode.insertBefore(iconBox, heading);
+      } else {
+        item.insertBefore(iconBox, item.firstChild);
+      }
+ 
+      gridWrapper.appendChild(item);
+ 
+    });
+ 
+    contentWrapper.appendChild(headingDiv);
     contentWrapper.appendChild(gridWrapper);
  
-    // Clear block and rebuild cleanly
-    while (block.firstChild) {
-      block.removeChild(block.firstChild);
-    }
- 
+    block.innerHTML = "";
     block.appendChild(imageDiv);
     block.appendChild(contentWrapper);
+ 
   }
  
   if (document.readyState === "loading") {
