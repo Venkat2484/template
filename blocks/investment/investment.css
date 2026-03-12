@@ -9,24 +9,24 @@
   grid-row: span 3;
 }
  
-/* TITLE SECTION */
+/* TITLE + TEXT */
 .investment-item1{
   grid-column:2;
 }
  
-/* 4 ITEMS GRID */
+/* create grid for 4 items */
 .investment-item2,
 .investment-item3,
 .investment-item4{
   grid-column:2;
 }
  
-/* create 2x2 layout */
+/* 2x2 layout */
 .investment-item2,
 .investment-item3,
 .investment-item4{
-  display:inline-block;
   width:48%;
+  display:inline-block;
   vertical-align:top;
   margin-top:20px;
 }
@@ -37,10 +37,10 @@
   margin-bottom:10px;
 }
  
-/* title */
+/* heading */
 .investment.block h3{
   font-size:18px;
-  margin-bottom:5px;
+  margin-bottom:6px;
 }
  
 /* text */
