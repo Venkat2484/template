@@ -1,82 +1,83 @@
-export default function decorate(block) {
-  // Expect structure: block > wrapper > [titleDiv, descDiv]
-  const wrapper = block.firstElementChild;
+
+``export default function decorate(block) {
+  const wrapper = block.children[0];
   if (!wrapper) return;
 
   wrapper.classList.add('goals-head');
 
-  const titleDiv = wrapper.children[0];
-  const descDiv = wrapper.children[1];
+  const firstDiv = wrapper.children[0];
+  const secondDiv = wrapper.children[1];
 
-  if (titleDiv) titleDiv.classList.add('goals-title');
-  if (!descDiv) return;
-  descDiv.classList.add('goals-description');
+  if (firstDiv) firstDiv.classList.add('goals-title');
+  if (secondDiv) secondDiv.classList.add('goals-description');
 
-  // Take a stable snapshot of the original children (elements only)
-  const original = Array.from(descDiv.children);
+  // ---- Add icons to each item inside .goals-description ----
+  const desc = wrapper.querySelector('.goals-description');
+  if (!desc) return;
 
-  // We'll rebuild the description area in order using a fragment
-  const out = document.createDocumentFragment();
-
-  // Helper to start a new feature block
-  const createFeature = (iconEl) => {
-    const feature = document.createElement('div');
-    feature.classList.add('goals-feature');
-
-    const iconWrap = document.createElement('div');
-    iconWrap.classList.add('goals-feature-icon');
-    iconWrap.append(iconEl);
-
-    const textWrap = document.createElement('div');
-    textWrap.classList.add('goals-feature-text');
-
-    feature.append(iconWrap, textWrap);
-    return { feature, textWrap };
+  // Map heading text to icon (inline SVG)
+  const iconMap = {
+    'Our Mission': `
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/>
+      </svg>
+    `,
+    'Our Goal': `
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M22 12h-4M6 12H2M12 2v4M12 18v4M12 12l4-4"/>
+      </svg>
+    `,
+    'Our projects': `
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <rect x="3" y="3" width="7" height="7"/>
+        <rect x="14" y="3" width="7" height="7"/>
+        <rect x="3" y="14" width="7" height="7"/>
+        <rect x="14" y="14" width="7" height="7"/>
+      </svg>
+    `,
   };
 
-  let i = 0;
-  while (i < original.length) {
-    const el = original[i];
+  // For each item: assume structure like:
+  // <div>
+  //   <h3>Our Mission</h3>
+  //   <p>...</p>
+  // </div>
+  const items = Array.from(desc.children).filter((el) => el.tagName === 'DIV');
 
-    // Case 1: Start of a new feature — <p> with an <img> or <picture>
-    if (
-      el.tagName === 'P' &&
-      (el.querySelector('img') || el.querySelector('picture'))
-    ) {
-      const { feature, textWrap } = createFeature(el); // el becomes the icon container content
+  items.forEach((item) => {
+    const heading = item.querySelector('h3, h4, h2');
+    const title = heading?.textContent?.trim() || '';
 
-      // Consume subsequent H3/H4/P as text of this feature
-      let j = i + 1;
-      while (j < original.length) {
-        const next = original[j];
-        const tag = next.tagName;
+    // Create icon box
+    const iconBox = document.createElement('span');
+    iconBox.className = 'goals-icon';
 
-        // If the next item is another image paragraph, stop grouping (new feature)
-        const nextStartsFeature =
-          tag === 'P' && (next.querySelector('img') || next.querySelector('picture'));
+    // Pick icon by heading text, fallback to a generic icon
+    const svg = iconMap[title] || `
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+    `;
 
-        if (nextStartsFeature) break;
+    iconBox.innerHTML = svg;
 
-        // Only collect H3/H4/P as feature text; anything else ends the feature
-        if (tag === 'H3' || tag === 'H4' || tag === 'P') {
-          textWrap.append(next);
-          j += 1;
-        } else {
-          break;
-        }
-      }
+    // Wrap the content in a flex row: [icon][content]
+    // Create a container so we don’t break existing structure
+    const row = document.createElement('div');
+    row.className = 'goals-item-row';
 
-      out.append(feature);
-      i = j;
-      continue;
-    }
+    // Move current children into a content wrapper
+    const contentWrap = document.createElement('div');
+    contentWrap.className = 'goals-item-content';
+    while (item.firstChild) contentWrap.appendChild(item.firstChild);
 
-    // Case 2: Anything else stays at top-level of description
-    out.append(el);
-    i += 1;
-  }
-
-  // Replace descDiv content with rebuilt fragment
-  descDiv.innerHTML = '';
-  descDiv.append(out);
+    row.appendChild(iconBox);
+    row.appendChild(contentWrap);
+    item.appendChild(row);
+    item.classList.add('goals-item');
+  });
 }
+``
