@@ -4,7 +4,6 @@ export default function decorate(block) {
   if (!wrapper) return;
  
   wrapper.classList.add('goals-head');
-  
  
   const firstDiv = wrapper.children[0];
   const secondDiv = wrapper.children[1];
@@ -18,4 +17,3 @@ export default function decorate(block) {
   }
  
 }
-
