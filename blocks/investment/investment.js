@@ -17,20 +17,16 @@
     document.head.appendChild(link);
   }
  
-  function addIcons(itemCells) {
-    for (var m = 0; m < itemCells.length; m++) {
-      var item = itemCells[m];
-      if (item.querySelector(".investment-block__icon")) continue;
+  function addIconsToItems(block) {
+    var items = Array.from(block.querySelectorAll(".investment-block__item"));
+    for (var m = 0; m < items.length; m++) {
+      if (items[m].querySelector(".investment-block__icon")) continue;
       var iconBox = document.createElement("div");
       iconBox.classList.add("investment-block__icon");
       var iconEl = document.createElement("i");
       iconEl.classList.add("fas", icons[m % icons.length]);
       iconBox.appendChild(iconEl);
-      if (item.firstChild) {
-        item.insertBefore(iconBox, item.firstChild);
-      } else {
-        item.appendChild(iconBox);
-      }
+      items[m].insertBefore(iconBox, items[m].firstChild);
     }
   }
  
@@ -39,84 +35,84 @@
  
     var block = document.querySelector(".investment.block");
     if (!block) return;
-    if (block.classList.contains("investment-block--initialized")) return;
+ 
+    if (block.classList.contains("investment-block--initialized")) {
+      addIconsToItems(block);
+      return;
+    }
+ 
     block.classList.add("investment-block--initialized");
  
-    // Get every cell at block > div > div level
-    var allCells = Array.from(block.querySelectorAll(":scope > div > div"));
+    var rows = Array.from(block.children);
+    if (rows.length < 1) return;
  
-    // Find the cell that contains the image
-    var imageCell = null;
-    var row0 = null;
-    for (var ci = 0; ci < allCells.length; ci++) {
-      if (allCells[ci].querySelector("img, picture")) {
-        imageCell = allCells[ci];
-        row0 = imageCell.parentElement;
-        break;
-      }
-    }
+    var row0 = rows[0];
+    var row0Cells = Array.from(row0.querySelectorAll(":scope > div"));
  
-    if (!imageCell && allCells.length > 0) {
-      imageCell = allCells[0];
-      row0 = imageCell.parentElement;
-    }
+    var imageDiv = null;
+    var headingDiv = null;
  
-    // Heading cell = sibling of image cell inside row0
-    var headingCell = null;
-    if (row0) {
-      var row0Cells = Array.from(row0.querySelectorAll(":scope > div"));
-      for (var ri = 0; ri < row0Cells.length; ri++) {
-        if (row0Cells[ri] !== imageCell) {
-          headingCell = row0Cells[ri];
-          break;
+    if (row0Cells.length >= 2) {
+      for (var c = 0; c < row0Cells.length; c++) {
+        if (!imageDiv && row0Cells[c].querySelector("img, picture")) {
+          imageDiv = row0Cells[c];
+        } else if (!headingDiv) {
+          headingDiv = row0Cells[c];
         }
       }
+    } else if (row0Cells.length === 1) {
+      imageDiv = row0Cells[0].querySelector("img, picture") ? row0Cells[0] : row0;
+    } else {
+      imageDiv = row0;
     }
  
-    // Item cells = every cell NOT in row0
-    var itemCells = [];
-    for (var j = 0; j < allCells.length; j++) {
-      if (row0 && allCells[j].parentElement === row0) continue;
-      itemCells.push(allCells[j]);
-    }
+    if (!imageDiv) imageDiv = row0;
+    imageDiv.classList.add("investment-block__image");
  
-    // Build layout
-    imageCell.classList.add("investment-block__image");
+    var allItems = [];
+    for (var i = 1; i < rows.length; i++) {
+      var row = rows[i];
+      var cells = Array.from(row.querySelectorAll(":scope > div"));
+      if (cells.length > 0) {
+        for (var j = 0; j < cells.length; j++) {
+          allItems.push(cells[j]);
+        }
+      } else {
+        allItems.push(row);
+      }
+    }
  
     var contentWrapper = document.createElement("div");
     contentWrapper.classList.add("investment-block__content");
  
-    if (headingCell) {
-      headingCell.classList.add("investment-block__heading");
-      contentWrapper.appendChild(headingCell);
+    if (headingDiv) {
+      headingDiv.classList.add("investment-block__heading");
+      contentWrapper.appendChild(headingDiv);
     }
  
     var gridWrapper = document.createElement("div");
     gridWrapper.classList.add("investment-block__grid");
  
-    for (var k = 0; k < itemCells.length; k++) {
-      itemCells[k].classList.add("investment-block__item");
-      gridWrapper.appendChild(itemCells[k]);
+    for (var k = 0; k < allItems.length; k++) {
+      allItems[k].classList.add("investment-block__item");
+      gridWrapper.appendChild(allItems[k]);
     }
+ 
     contentWrapper.appendChild(gridWrapper);
  
-    // Clear block and rebuild
     while (block.firstChild) {
       block.removeChild(block.firstChild);
     }
-    block.appendChild(imageCell);
+    block.appendChild(imageDiv);
     block.appendChild(contentWrapper);
  
-    // Debug: open browser console to verify count
-    console.log("[investment-block] itemCells found:", itemCells.length);
-    for (var d = 0; d < itemCells.length; d++) {
-      console.log("[investment-block] item[" + d + "]:", itemCells[d].textContent.trim().substring(0, 40));
-    }
+    // First pass: add icons right after rebuild
+    addIconsToItems(block);
  
-    // Add icons — immediately + 2 delayed safety passes
-    addIcons(itemCells);
-    setTimeout(function () { addIcons(itemCells); }, 300);
-    setTimeout(function () { addIcons(itemCells); }, 1000);
+    // Second pass: safety net for any deferred AEM rendering
+    setTimeout(function () {
+      addIconsToItems(block);
+    }, 300);
   }
  
   if (document.readyState === "loading") {
