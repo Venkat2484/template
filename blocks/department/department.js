@@ -14,6 +14,7 @@ export default function decorate(block) {
   if (ul) ul.classList.add("filter-list");
  
   const liItems = filter.querySelectorAll("li");
+  const totalFilters = liItems.length - 1; // exclude "All Work"
  
   liItems.forEach((li, i) => {
     li.classList.add("filter-btn");
@@ -22,7 +23,6 @@ export default function decorate(block) {
       li.classList.add("active");
     }
  
-    /* CLICK FILTER FUNCTION */
     li.addEventListener("click", () => {
  
       liItems.forEach(btn => btn.classList.remove("active"));
@@ -33,11 +33,11 @@ export default function decorate(block) {
       projects.forEach((card, index) => {
  
         if (i === 0) {
+          // All Work — show everything
           card.style.display = "block";
-        } else if (i === 1) {
-          card.style.display = index % 2 === 0 ? "block" : "none";
         } else {
-          card.style.display = index % 2 !== 0 ? "block" : "none";
+          // Each filter button gets its own group of items
+          card.style.display = (index % totalFilters) === (i - 1) ? "block" : "none";
         }
  
       });
@@ -50,7 +50,6 @@ export default function decorate(block) {
   const items = Array.from(block.children).slice(1);
  
   items.forEach(item => {
- 
     if (!item) return;
  
     item.classList.add("project-item");
@@ -60,7 +59,6 @@ export default function decorate(block) {
  
     const picture = item.querySelector("picture");
     if (picture) picture.classList.add("project-picture");
- 
   });
  
 }
