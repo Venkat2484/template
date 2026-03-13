@@ -49,20 +49,24 @@
   grid-column: 1 / -1;
 }
  
-/* PROJECT ITEM — opacity only, no transform */
+/* PROJECT ITEM */
 .project-item {
-  overflow: hidden;
   border-radius: 6px;
   opacity: 1;
   transition: opacity 0.35s ease;
   margin-bottom: 0;
 }
  
-/* IMAGE WRAPPER — landscape ratio */
+/* IMAGE WRAPPER — this is the clipping container */
 .project-img {
   width: 100%;
   overflow: hidden;
   aspect-ratio: 4 / 3;
+  position: relative;
+  border-radius: 6px;
+  /* Forces GPU compositing so overflow: hidden clips the zoom correctly */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
  
 .project-picture {
@@ -83,6 +87,13 @@
   margin: 0 0 20px 0;
   padding: 0;
   transition: transform 0.4s ease, filter 0.4s ease;
+  transform-origin: center center;
+}
+ 
+/* HOVER EFFECT — zoom stays inside .project-img */
+.project-item:hover .project-img img {
+  transform: scale(1.1);
+  filter: brightness(70%);
 }
  
 /* Extra child divs */
@@ -97,11 +108,5 @@
 .project-col-2:empty,
 .project-col-3:empty {
   display: none;
-}
- 
-/* HOVER EFFECT */
-.project-item:hover img {
-  transform: scale(1.08);
-  filter: brightness(70%);
 }
  
