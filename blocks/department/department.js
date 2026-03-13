@@ -23,9 +23,7 @@ export default function decorate(block) {
     item.classList.add("project-item");
     item.dataset.category = String(index % totalFilters);
  
-    // Select all 3 child divs explicitly
     const childDivs = item.querySelectorAll(":scope > div");
- 
     childDivs.forEach((div, di) => {
       if (di === 0) {
         div.classList.add("project-img");
@@ -50,7 +48,7 @@ export default function decorate(block) {
  
       const projects = block.querySelectorAll(".project-item");
  
-      // Count matches first
+      // Count how many items match
       let matchCount = 0;
       if (i !== 0) {
         projects.forEach(card => {
@@ -60,13 +58,12 @@ export default function decorate(block) {
  
       const showAll = i === 0 || matchCount === 0;
  
-      // Step 1: fade everything out first
+      // Fade all out first
       projects.forEach(card => {
-        card.classList.remove("item-visible");
-        card.classList.add("item-hidden");
+        card.style.opacity = "0";
       });
  
-      // Step 2: after fade-out, show matched items with stagger
+      // After fade out, show matching items with stagger fade in
       setTimeout(() => {
         let visibleIndex = 0;
         projects.forEach(card => {
@@ -74,14 +71,14 @@ export default function decorate(block) {
  
           if (matches) {
             card.style.display = "";
-            card.classList.remove("item-hidden");
+            const delay = visibleIndex * 80;
             setTimeout(() => {
-              card.classList.add("item-visible");
-            }, visibleIndex * 80);
+              card.style.opacity = "1";
+            }, delay);
             visibleIndex++;
           } else {
-            card.classList.remove("item-visible");
             card.style.display = "none";
+            card.style.opacity = "0";
           }
         });
       }, 300);
