@@ -95,6 +95,11 @@
   transform: scale(1.1);
   filter: brightness(70%);
 }
+
+.project-col-2:hover {
+  transform: scale(1.1);
+  filter: brightness(70%);
+}
  
 /* Extra child divs */
 .project-col-2,
