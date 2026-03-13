@@ -1,15 +1,19 @@
-document.addEventListener("DOMContentLoaded", function () {
+export default function decorate(block) {
  
-  const block = document.querySelector(".department.block");
+  const child0 = block.children[0];
+  const child1 = block.children[1];
+  const child2 = block.children[2];
+  const child3 = block.children[3];
  
-  if (!block) return;
+  if (!child0 || !child1 || !child2 || !child3) return;
  
-  const children = block.children;
+  /* filter section */
+  child0.classList.add("project-filter");
  
-  if (children[0]) children[0].classList.add("filter-section");
-  if (children[1]) children[1].classList.add("project-item");
-  if (children[2]) children[2].classList.add("project-item");
-  if (children[3]) children[3].classList.add("project-item");
+  /* image sections */
+  child1.classList.add("project-item");
+  child2.classList.add("project-item");
+  child3.classList.add("project-item");
  
-});
+}
  
