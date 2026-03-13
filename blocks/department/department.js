@@ -23,11 +23,20 @@ export default function decorate(block) {
     item.classList.add("project-item");
     item.dataset.category = String(index % totalFilters);
  
-    const innerDiv = item.querySelector("div");
-    if (innerDiv) innerDiv.classList.add("project-img");
+    // Select all 3 child divs explicitly
+    const childDivs = item.querySelectorAll(":scope > div");
  
-    const picture = item.querySelector("picture");
-    if (picture) picture.classList.add("project-picture");
+    childDivs.forEach((div, di) => {
+      if (di === 0) {
+        div.classList.add("project-img");
+        const picture = div.querySelector("picture");
+        if (picture) picture.classList.add("project-picture");
+      } else if (di === 1) {
+        div.classList.add("project-col-2");
+      } else if (di === 2) {
+        div.classList.add("project-col-3");
+      }
+    });
   });
  
   /* FILTER CLICK */
@@ -41,7 +50,7 @@ export default function decorate(block) {
  
       const projects = block.querySelectorAll(".project-item");
  
-      // Check how many items match this filter
+      // Count matches first
       let matchCount = 0;
       if (i !== 0) {
         projects.forEach(card => {
@@ -49,31 +58,34 @@ export default function decorate(block) {
         });
       }
  
-      // If no items match, show all (fallback so button is never empty)
       const showAll = i === 0 || matchCount === 0;
  
-      let visibleIndex = 0;
+      // Step 1: fade everything out first
       projects.forEach(card => {
-        const matches = showAll || card.dataset.category === String(i - 1);
- 
-        if (matches) {
-          card.style.display = "";
-          card.style.opacity = "0";
-          card.style.transform = "scale(0.92) translateY(16px)";
-          const delay = visibleIndex * 60;
-          setTimeout(() => {
-            card.style.opacity = "1";
-            card.style.transform = "scale(1) translateY(0)";
-          }, delay);
-          visibleIndex++;
-        } else {
-          card.style.opacity = "0";
-          card.style.transform = "scale(0.9) translateY(8px)";
-          setTimeout(() => {
-            card.style.display = "none";
-          }, 280);
-        }
+        card.classList.remove("item-visible");
+        card.classList.add("item-hidden");
       });
+ 
+      // Step 2: after fade-out, show matched items with stagger
+      setTimeout(() => {
+        let visibleIndex = 0;
+        projects.forEach(card => {
+          const matches = showAll || card.dataset.category === String(i - 1);
+ 
+          if (matches) {
+            card.style.display = "";
+            card.classList.remove("item-hidden");
+            setTimeout(() => {
+              card.classList.add("item-visible");
+            }, visibleIndex * 80);
+            visibleIndex++;
+          } else {
+            card.classList.remove("item-visible");
+            card.style.display = "none";
+          }
+        });
+      }, 300);
+ 
     });
   });
 }
