@@ -1,14 +1,10 @@
 export default function decorate(block) {
  
   const filter = block.children[0];
-  const item1 = block.children[1];
-  const item2 = block.children[2];
-  const item3 = block.children[3];
  
   if (!filter) return;
  
   /* FILTER SECTION */
- 
   filter.classList.add("project-filter");
  
   const filterDiv = filter.querySelector("div");
@@ -27,7 +23,6 @@ export default function decorate(block) {
     }
  
     /* CLICK FILTER FUNCTION */
- 
     li.addEventListener("click", () => {
  
       liItems.forEach(btn => btn.classList.remove("active"));
@@ -39,11 +34,9 @@ export default function decorate(block) {
  
         if (i === 0) {
           card.style.display = "block";
-        } 
-        else if (i === 1) {
+        } else if (i === 1) {
           card.style.display = index % 2 === 0 ? "block" : "none";
-        } 
-        else {
+        } else {
           card.style.display = index % 2 !== 0 ? "block" : "none";
         }
  
@@ -53,10 +46,8 @@ export default function decorate(block) {
  
   });
  
- 
   /* PROJECT ITEMS */
- 
-  const items = [item1, item2, item3];
+  const items = Array.from(block.children).slice(1);
  
   items.forEach(item => {
  
@@ -65,11 +56,9 @@ export default function decorate(block) {
     item.classList.add("project-item");
  
     const innerDiv = item.querySelector("div");
- 
     if (innerDiv) innerDiv.classList.add("project-img");
  
     const picture = item.querySelector("picture");
- 
     if (picture) picture.classList.add("project-picture");
  
   });
