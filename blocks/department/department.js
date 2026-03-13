@@ -30,48 +30,6 @@ export default function decorate(block) {
     if (picture) picture.classList.add("project-picture");
   });
  
-  /* PLACEHOLDER IMAGES FOR MARKETING (category: totalFilters - 2) — 2 images */
-  const marketingImages = [
-    "https://picsum.photos/seed/mkt1/600/400",
-    "https://picsum.photos/seed/mkt2/600/400"
-  ];
- 
-  /* PLACEHOLDER IMAGES FOR UX/UI DESIGN (category: totalFilters - 1) — 3 images */
-  const uxImages = [
-    "https://picsum.photos/seed/ux1/600/400",
-    "https://picsum.photos/seed/ux2/600/400",
-    "https://picsum.photos/seed/ux3/600/400"
-  ];
- 
-  function createPlaceholderItem(src, category) {
-    const item = document.createElement("div");
-    item.classList.add("project-item");
-    item.dataset.category = String(category);
- 
-    const imgDiv = document.createElement("div");
-    imgDiv.classList.add("project-img");
- 
-    const picture = document.createElement("picture");
-    picture.classList.add("project-picture");
- 
-    const img = document.createElement("img");
-    img.src = src;
-    img.alt = "Project image";
-    img.loading = "lazy";
- 
-    picture.appendChild(img);
-    imgDiv.appendChild(picture);
-    item.appendChild(imgDiv);
-    block.appendChild(item);
-    return item;
-  }
- 
-  const marketingCategory = totalFilters - 2;
-  const uxCategory = totalFilters - 1;
- 
-  marketingImages.forEach(src => createPlaceholderItem(src, marketingCategory));
-  uxImages.forEach(src => createPlaceholderItem(src, uxCategory));
- 
   /* FILTER CLICK */
   liItems.forEach((li, i) => {
     li.classList.add("filter-btn");
@@ -82,10 +40,21 @@ export default function decorate(block) {
       li.classList.add("active");
  
       const projects = block.querySelectorAll(".project-item");
-      let visibleIndex = 0;
  
+      // Check how many items match this filter
+      let matchCount = 0;
+      if (i !== 0) {
+        projects.forEach(card => {
+          if (card.dataset.category === String(i - 1)) matchCount++;
+        });
+      }
+ 
+      // If no items match, show all (fallback so button is never empty)
+      const showAll = i === 0 || matchCount === 0;
+ 
+      let visibleIndex = 0;
       projects.forEach(card => {
-        const matches = i === 0 || card.dataset.category === String(i - 1);
+        const matches = showAll || card.dataset.category === String(i - 1);
  
         if (matches) {
           card.style.display = "";
