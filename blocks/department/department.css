@@ -41,6 +41,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   padding: 0;
+  align-items: start;
 }
  
 /* Filter row spans full width */
@@ -48,21 +49,42 @@
   grid-column: 1 / -1;
 }
  
-/* PROJECT ITEM */
+/* PROJECT ITEM — animation states */
 .project-item {
   overflow: hidden;
   border-radius: 6px;
-  opacity: 1;
-  transform: scale(1) translateY(0);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
  
-/* IMAGE WRAPPER — forces landscape ratio */
-.project-img {
+.project-item.item-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+ 
+.project-item.item-hidden {
+  opacity: 0;
+  transform: translateY(10px);
+}
+ 
+/* Show items by default on page load */
+.project-item:not(.item-hidden) {
+  opacity: 1;
+  transform: translateY(0);
+}
+ 
+/* ALL 3 DIVS in a row inside each project-item */
+.project-img,
+.project-col-2,
+.project-col-3 {
   width: 100%;
+}
+ 
+/* First div — image */
+.project-img {
   overflow: hidden;
   aspect-ratio: 4 / 3;
-  position: relative;
 }
  
 .project-picture {
@@ -73,16 +95,30 @@
   padding: 0;
 }
  
-/* IMAGE */
+/* IMAGE — landscape + margin bottom */
 .project-picture img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   display: block;
-  margin: 0 0 16px 0;
+  margin: 0 0 20px 0;
   padding: 0;
   transition: transform 0.4s ease, filter 0.4s ease;
+}
+ 
+/* Second and third divs */
+.project-col-2,
+.project-col-3 {
+  padding: 6px 0;
+  font-size: 14px;
+  color: #444;
+}
+ 
+/* Hide if empty */
+.project-col-2:empty,
+.project-col-3:empty {
+  display: none;
 }
  
 /* HOVER EFFECT */
