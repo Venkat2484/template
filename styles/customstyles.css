@@ -840,5 +840,9 @@ padding-top :56px;
  
 
 
+.carousel-slide-content > p.button-wrapper {
+     margin: 12px 0;
+    display: inline-block;
+}
 
 
