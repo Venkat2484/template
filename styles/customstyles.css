@@ -694,6 +694,11 @@ form[data-action="/contactform"] .form-submit{ justify-self: start; }
 
 /*header section image changes*/
  
+.custom-cards > .cards-wrapper > .cards{
+padding-top :56px;
+
+}
+
 
 
 
