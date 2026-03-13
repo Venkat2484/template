@@ -17,15 +17,11 @@ export default function decorate(block) {
  
   /* PROJECT ITEMS */
   const items = Array.from(block.children).slice(1);
-  const totalItems = items.length;
  
   items.forEach((item, index) => {
     if (!item) return;
     item.classList.add("project-item");
- 
-    // Evenly spread items across all filter categories
-    const category = index % totalFilters;
-    item.dataset.category = String(category);
+    item.dataset.category = String(index % totalFilters);
  
     const innerDiv = item.querySelector("div");
     if (innerDiv) innerDiv.classList.add("project-img");
@@ -33,6 +29,48 @@ export default function decorate(block) {
     const picture = item.querySelector("picture");
     if (picture) picture.classList.add("project-picture");
   });
+ 
+  /* PLACEHOLDER IMAGES FOR MARKETING (category: totalFilters - 2) — 2 images */
+  const marketingImages = [
+    "https://picsum.photos/seed/mkt1/600/400",
+    "https://picsum.photos/seed/mkt2/600/400"
+  ];
+ 
+  /* PLACEHOLDER IMAGES FOR UX/UI DESIGN (category: totalFilters - 1) — 3 images */
+  const uxImages = [
+    "https://picsum.photos/seed/ux1/600/400",
+    "https://picsum.photos/seed/ux2/600/400",
+    "https://picsum.photos/seed/ux3/600/400"
+  ];
+ 
+  function createPlaceholderItem(src, category) {
+    const item = document.createElement("div");
+    item.classList.add("project-item");
+    item.dataset.category = String(category);
+ 
+    const imgDiv = document.createElement("div");
+    imgDiv.classList.add("project-img");
+ 
+    const picture = document.createElement("picture");
+    picture.classList.add("project-picture");
+ 
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = "Project image";
+    img.loading = "lazy";
+ 
+    picture.appendChild(img);
+    imgDiv.appendChild(picture);
+    item.appendChild(imgDiv);
+    block.appendChild(item);
+    return item;
+  }
+ 
+  const marketingCategory = totalFilters - 2;
+  const uxCategory = totalFilters - 1;
+ 
+  marketingImages.forEach(src => createPlaceholderItem(src, marketingCategory));
+  uxImages.forEach(src => createPlaceholderItem(src, uxCategory));
  
   /* FILTER CLICK */
   liItems.forEach((li, i) => {
@@ -44,24 +82,12 @@ export default function decorate(block) {
       li.classList.add("active");
  
       const projects = block.querySelectorAll(".project-item");
-      let matchedCount = 0;
- 
-      // First pass: check how many match
-      projects.forEach(card => {
-        if (i === 0 || card.dataset.category === String(i - 1)) {
-          matchedCount++;
-        }
-      });
- 
-      // Second pass: show/hide with animation
       let visibleIndex = 0;
-      projects.forEach((card, index) => {
+ 
+      projects.forEach(card => {
         const matches = i === 0 || card.dataset.category === String(i - 1);
  
-        // If no items match this filter, fall back to showing items by round-robin slot
-        const fallbackMatch = matchedCount === 0 && (index % totalFilters === (i - 1) % totalFilters);
- 
-        if (matches || fallbackMatch) {
+        if (matches) {
           card.style.display = "";
           card.style.opacity = "0";
           card.style.transform = "scale(0.92) translateY(16px)";
