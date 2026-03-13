@@ -1,81 +1,86 @@
-
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
  
-  const department = document.querySelector(".department.block");
+const block = document.querySelector(".department.block");
  
-  if (!department) return;
+if(!block) return;
  
-  const children = department.children;
+const children = block.children;
  
-  /* ---------- FIRST CHILD (FILTER MENU) ---------- */
+/* ---------- FILTER SECTION ---------- */
  
-  const filterSection = children[0];
-  filterSection.classList.add("project-filter");
+const filter = children[0];
+filter.classList.add("project-filter");
  
-  const innerDiv = filterSection.querySelector("div");
-  innerDiv.classList.add("filter-wrapper");
+const filterInner = filter.children[0];
+filterInner.classList.add("filter-inner");
  
-  const ul = innerDiv.querySelector("ul");
-  ul.classList.add("filter-list");
+const ul = filterInner.querySelector("ul");
+ul.classList.add("filter-menu");
  
-  const liItems = ul.querySelectorAll("li");
+const li = ul.querySelectorAll("li");
  
-  liItems.forEach((li, index) => {
-    li.classList.add("filter-item");
+li.forEach((item,i)=>{
+ item.classList.add("filter-btn");
  
-    if (index === 0) {
-      li.classList.add("active");
-    }
+ if(i===0){
+  item.classList.add("active");
+ }
+});
+ 
+ 
+/* ---------- IMAGE SECTION ---------- */
+ 
+for(let i=1;i<children.length;i++){
+ 
+ const card = children[i];
+ card.classList.add("project-card");
+ 
+ const innerDiv = card.children[0];
+ innerDiv.classList.add("project-img");
+ 
+ const picture = innerDiv.querySelector("picture");
+ 
+ if(picture){
+   picture.classList.add("image-box");
+ }
+ 
+}
+ 
+ 
+/* ---------- FILTER FUNCTION ---------- */
+ 
+const cards = document.querySelectorAll(".project-card");
+ 
+li.forEach((btn,index)=>{
+ 
+ btn.addEventListener("click",()=>{
+ 
+  li.forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+ 
+  cards.forEach((card,i)=>{
+ 
+   if(index===0){
+     card.style.display="block";
+   }
+ 
+   else if(index===1){
+     card.style.display = i%2===0 ? "block":"none";
+   }
+ 
+   else if(index===2){
+     card.style.display = i%2!==0 ? "block":"none";
+   }
+ 
+   else{
+     card.style.display="block";
+   }
+ 
   });
  
+ });
  
-  /* ---------- PROJECT IMAGES ---------- */
- 
-  for (let i = 1; i <= 3; i++) {
- 
-    const projectDiv = children[i];
-    projectDiv.classList.add("project-card");
- 
-    const picture = projectDiv.querySelector("picture");
- 
-    if (picture) {
-      picture.classList.add("project-image");
-    }
- 
-  }
- 
- 
-  /* ---------- FILTER FUNCTION ---------- */
- 
-  liItems.forEach((li, index) => {
- 
-    li.addEventListener("click", function () {
- 
-      liItems.forEach(item => item.classList.remove("active"));
-      this.classList.add("active");
- 
-      const cards = document.querySelectorAll(".project-card");
- 
-      cards.forEach((card, i) => {
- 
-        if (index === 0) {
-          card.style.display = "block";
-        } 
-        else if (index === 1) {
-          card.style.display = i % 2 === 0 ? "block" : "none";
-        } 
-        else if (index === 2) {
-          card.style.display = i % 2 !== 0 ? "block" : "none";
-        } 
-        else {
-          card.style.display = "block";
-        }
- 
-      });
- 
-    });
- 
-  });
+});
  
 });
  
