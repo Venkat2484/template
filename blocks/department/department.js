@@ -1,19 +1,78 @@
 export default function decorate(block) {
  
-  const child0 = block.children[0];
-  const child1 = block.children[1];
-  const child2 = block.children[2];
-  const child3 = block.children[3];
+  const filter = block.children[0];
+  const item1 = block.children[1];
+  const item2 = block.children[2];
+  const item3 = block.children[3];
  
-  if (!child0 || !child1 || !child2 || !child3) return;
+  if (!filter) return;
  
-  /* filter section */
-  child0.classList.add("project-filter");
+  /* FILTER SECTION */
  
-  /* image sections */
-  child1.classList.add("project-item");
-  child2.classList.add("project-item");
-  child3.classList.add("project-item");
+  filter.classList.add("project-filter");
+ 
+  const filterDiv = filter.querySelector("div");
+  if (filterDiv) filterDiv.classList.add("filter-wrapper");
+ 
+  const ul = filter.querySelector("ul");
+  if (ul) ul.classList.add("filter-list");
+ 
+  const liItems = filter.querySelectorAll("li");
+ 
+  liItems.forEach((li, i) => {
+    li.classList.add("filter-btn");
+ 
+    if (i === 0) {
+      li.classList.add("active");
+    }
+ 
+    /* CLICK FILTER FUNCTION */
+ 
+    li.addEventListener("click", () => {
+ 
+      liItems.forEach(btn => btn.classList.remove("active"));
+      li.classList.add("active");
+ 
+      const projects = block.querySelectorAll(".project-item");
+ 
+      projects.forEach((card, index) => {
+ 
+        if (i === 0) {
+          card.style.display = "block";
+        } 
+        else if (i === 1) {
+          card.style.display = index % 2 === 0 ? "block" : "none";
+        } 
+        else {
+          card.style.display = index % 2 !== 0 ? "block" : "none";
+        }
+ 
+      });
+ 
+    });
+ 
+  });
+ 
+ 
+  /* PROJECT ITEMS */
+ 
+  const items = [item1, item2, item3];
+ 
+  items.forEach(item => {
+ 
+    if (!item) return;
+ 
+    item.classList.add("project-item");
+ 
+    const innerDiv = item.querySelector("div");
+ 
+    if (innerDiv) innerDiv.classList.add("project-img");
+ 
+    const picture = item.querySelector("picture");
+ 
+    if (picture) picture.classList.add("project-picture");
+ 
+  });
  
 }
  
