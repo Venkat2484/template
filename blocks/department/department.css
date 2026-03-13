@@ -38,18 +38,52 @@
 .department.block {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 16px;
+  padding: 0 16px;
 }
  
 .department.block .project-filter {
   grid-column: 1 / -1;
 }
  
-/* IMAGE WRAPPER */
+/* PROJECT ITEM — animation */
 .project-item {
   overflow: hidden;
+  border-radius: 6px;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  padding: 6px;
+  box-sizing: border-box;
 }
  
+/* VISIBLE state */
+.project-item.project-visible {
+  display: block;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  animation: fadeIn 0.4s ease forwards;
+}
+ 
+/* HIDDEN state */
+.project-item.project-hidden {
+  display: none;
+  opacity: 0;
+}
+ 
+/* FADE IN ANIMATION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.93) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+ 
+/* IMAGE WRAPPER */
 .project-img {
   width: 100%;
   overflow: hidden;
@@ -64,7 +98,7 @@
   padding: 0;
 }
  
-/* IMAGE — no margin/padding */
+/* IMAGE */
 .project-picture img {
   width: 100%;
   height: 220px;
@@ -77,7 +111,7 @@
  
 /* HOVER EFFECT */
 .project-item:hover img {
-  transform: scale(1.1);
+  transform: scale(1.08);
   filter: brightness(70%);
 }
  
