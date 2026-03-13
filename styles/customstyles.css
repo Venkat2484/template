@@ -361,6 +361,10 @@ header nav .nav-sections .nav-drop[aria-expanded="true"]::after
   margin-left: 59%;
 
 }
+.message-from > coloums {
+        margin-left: 30%;
+        margin-top: 11%;
+}
  
 /*Custom cards section both*/
 
@@ -687,3 +691,4 @@ form[data-action="/contactform"] .form-submit{ justify-self: start; }
 
 /*header section image changes*/
  
+
