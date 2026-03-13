@@ -824,5 +824,21 @@ padding-top :56px;
 }
  
 
+.custom-slides > .carousel-wrapper .carousel-slide-indicators {
+
+    display:none;
+
+}
+ 
+.custom-cards > .cards-wrapper {
+
+    margin-top: -83px;
+
+    position: relative;
+
+    width: 88%;
+
+}
+ 
 
 
