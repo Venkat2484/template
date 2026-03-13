@@ -365,7 +365,10 @@ header nav .nav-sections .nav-drop[aria-expanded="true"]::after
         margin-left: 30%;
         margin-top: 11%;
 }
- 
+ .message-from > .columns-wrapper> .columns > ul > li {
+width:250%;
+ }
+
 /*Custom cards section both*/
 
 .custom-cards > .cards-wrapper {
@@ -691,6 +694,7 @@ form[data-action="/contactform"] .form-submit{ justify-self: start; }
 
 /*header section image changes*/
  
+
 
 
 
