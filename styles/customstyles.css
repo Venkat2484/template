@@ -699,14 +699,9 @@ padding-top :56px;
 
 }
 
-.carousel .carousel-slide-indicators {
+.carousel > .carousel-slide-indicators {
     display :none;
 }
 
 
 
-
-
-
-
-.carousel .carousel-slide-indicators
