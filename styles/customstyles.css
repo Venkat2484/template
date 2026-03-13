@@ -361,7 +361,7 @@ header nav .nav-sections .nav-drop[aria-expanded="true"]::after
   margin-left: 59%;
 
 }
-.message-from > coloums {
+.message-from > .columns > div {
         margin-left: 30%;
         margin-top: 11%;
 }
@@ -691,4 +691,5 @@ form[data-action="/contactform"] .form-submit{ justify-self: start; }
 
 /*header section image changes*/
  
+
 
